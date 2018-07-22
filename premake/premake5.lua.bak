@@ -11,15 +11,13 @@ workspace "LuaPbIntf"
 	platforms { "x64", "x32" }
 
 project "LuaPbIntf"
-    kind "StaticLib"
+    kind "SharedLib"
     targetname "luapbintf"
     targetprefix ""  -- linux: luapbintf.so
-    targetextension ".a"
     language "C++"
-    cppdialect "C++11"
     flags {
-        --"C++11",
-        --"StaticRuntime",  -- for protobuf
+        "C++11",
+        "StaticRuntime",  -- for protobuf
     }
     files {
         "../src/**.h",
@@ -29,12 +27,9 @@ project "LuaPbIntf"
     }
     includedirs {
         "../src",
-        "../../protobuf/include",
-        "../../tolua_runtime/luajit-2.1/src",
-        --"../third_party/lua/src",
-        --"/mingw64/include/lua5.1",
+        "../third_party/lua/src",
         "../third_party/lua-intf",
-        --"../third_party/protobuf/src",
+        "../third_party/protobuf/src",
     }
     libdirs {
         "../third_party/lib",
@@ -46,24 +41,17 @@ project "LuaPbIntf"
     If you really want to use Lua library compiled under C,
     you can define LUAINTF_LINK_LUA_COMPILED_IN_CXX to 0:
     --]]
-    --defines { "LUAINTF_LINK_LUA_COMPILED_IN_CXX=0" }
+    -- defines { "LUAINTF_LINK_LUA_COMPILED_IN_CXX=0" }
 
     filter "configurations:Debug"
-        symbols "On"
-        --flags { "Symbols" }
-        libdirs {
-            "../third_party/lib/Debug",
-            "/mingw64/lib",
-        }
+        flags { "Symbols" }
+        libdirs { "../third_party/lib/Debug" }
     filter "configurations:Release"
         defines { "NDEBUG" }
         optimize "On"
-        libdirs {
-            "../third_party/lib/Release",
-            "/mingw64/lib", 
-        }
+        libdirs { "../third_party/lib/Release" }
     filter { "system:windows" }
-        links { "liblua" }
+        links { "lua" }
     filter { "system:windows", "Debug" }
         links { "libprotobufd" }
     filter { "system:windows", "Release" }

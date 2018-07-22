@@ -1,7 +1,10 @@
 #ifndef DETAIL_CONFIG_H
 #define DETAIL_CONFIG_H
 
+extern "C"
+{
 #include <lua.h>  // for LUA_VERSION_NUM
+}
 
 // Lua5.3 has 64-bit integers.
 #if LUA_VERSION_NUM >= 503

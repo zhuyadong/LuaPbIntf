@@ -37,7 +37,7 @@
 /premake/*.db
 
 /third_party/lua
-/third_party/lua-intf
+#/third_party/lua-intf
 /third_party/protobuf
 /test/*.bat
 /test/inspect.lua
