@@ -213,6 +213,52 @@ struct LuaTypeMapping <long double>
 //---------------------------------------------------------------------------
 
 #if LUAINTF_UNSAFE_INT64 && (LUA_VERSION_NUM <= 502 || defined(LUA_32BITS))
+//YOOZOO{
+extern "C" {
+	extern void tolua_pushint64(lua_State* L, int64_t n);
+	extern int64_t tolua_checkint64(lua_State* L, int pos);
+	extern void tolua_pushuint64(lua_State* L, uint64_t n);
+	extern uint64_t tolua_checkuint64(lua_State* L, int pos);
+}
+
+template<typename T>
+struct LuaToluaInt64TypeMapping
+{
+	static void push(lua_State* L, T value)
+	{
+		tolua_pushint64(L, value);
+	}
+
+	static T get(lua_State* L, int index)
+	{
+		return static_cast<T>(tolua_checkint64(L, index));
+	}
+
+	static T opt(lua_State* L, int index, T def)
+	{
+		return lua_isnoneornil(L, index) ? def : get(L, index);
+	}
+};
+
+template<typename T>
+struct LuaToluaUInt64TypeMapping
+{
+	static void push(lua_State* L, T value)
+	{
+		tolua_pushuint64(L, value);
+	}
+
+	static T get(lua_State* L, int index)
+	{
+		return static_cast<T>(tolua_checkuint64(L, index));
+	}
+
+	static T opt(lua_State* L, int index, T def)
+	{
+		return lua_isnoneornil(L, index) ? def : get(L, index);
+	}
+};
+//YOOZOO}
 
 template <typename T>
 struct LuaUnsafeInt64TypeMapping
@@ -240,6 +286,7 @@ struct LuaUnsafeInt64TypeMapping
     }
 };
 
+#if 0 //YOOZOO
 template <>
 struct LuaTypeMapping <long long>
     : LuaUnsafeInt64TypeMapping <long long> {};
@@ -247,6 +294,15 @@ struct LuaTypeMapping <long long>
 template <>
 struct LuaTypeMapping <unsigned long long>
     : LuaUnsafeInt64TypeMapping <unsigned long long> {};
+#else
+template <>
+struct LuaTypeMapping <long long>
+    : LuaToluaInt64TypeMapping <long long> {};
+
+template <>
+struct LuaTypeMapping <unsigned long long>
+    : LuaToluaUInt64TypeMapping <unsigned long long> {};
+#endif
 
 #elif LUA_VERSION_NUM >= 503
 

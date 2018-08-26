@@ -77,7 +77,8 @@ LuaRef MsgToTbl::GetField(const FieldDescriptor& field) const
 #if LUA_HAS_64BIT_INTEGER
         return LuaRefValue(L, m_pRefl->GetUInt64(m_msg, &field));
 #else  // To support Lua5.1/5.2.
-        return LuaRefValue(L, double(m_pRefl->GetUInt64(m_msg, &field)));
+        //YOOZOO return LuaRefValue(L, double(m_pRefl->GetUInt64(m_msg, &field)));
+        return LuaRefValue(L, m_pRefl->GetUInt64(m_msg, &field));
 #endif
     case Fd::CPPTYPE_DOUBLE:
         return LuaRefValue(L, m_pRefl->GetDouble(m_msg, &field));

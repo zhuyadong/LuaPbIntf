@@ -62,7 +62,7 @@
 #endif
 
 //---------------------------------------------------------------------------
-
+#if 0
 LUA_INLINE const lua_Number* lua_version(lua_State*)
 {
     static const lua_Number version = LUA_VERSION_NUM;
@@ -175,6 +175,7 @@ LUA_INLINE lua_Number lua_tonumberx(lua_State* L, int i, int* is_num)
     return n;
 }
 
+#if 0
 LUA_INLINE lua_Integer lua_tointegerx(lua_State* L, int i, int* is_num)
 {
     lua_Integer n = lua_tointeger(L, i);
@@ -183,6 +184,7 @@ LUA_INLINE lua_Integer lua_tointegerx(lua_State* L, int i, int* is_num)
     }
     return n;
 }
+#endif
 
 LUA_INLINE void lua_len(lua_State* L, int i)
 {
@@ -461,5 +463,49 @@ LUA_INLINE int luaL_fileresult(lua_State* L, int stat, const char* fname)
 }
 
 //---------------------------------------------------------------------------
+#endif
 
+LUA_INLINE lua_Unsigned luaL_checkunsigned(lua_State* L, int i)
+{
+    lua_Unsigned result;
+    lua_Number n = lua_tonumber(L, i);
+    if (n == 0 && !lua_isnumber(L, i)) {
+        luaL_checktype(L, i, LUA_TNUMBER);
+    }
+    lua_number2unsigned(result, n);
+    return result;
+}
+LUA_INLINE int luaL_len(lua_State* L, int i)
+{
+    luaL_checkstack(L, 1, "not enough stack slots");
+    lua_len(L, i);
+    int is_num = 0;
+    int res = int(lua_tointegerx(L, -1, &is_num));
+    lua_pop(L, 1);
+    if (!is_num) {
+        luaL_error(L, "object length is not a number");
+    }
+    return res;
+}
+LUA_INLINE void lua_pushunsigned(lua_State* L, lua_Unsigned n)
+{
+    lua_pushnumber(L, lua_unsigned2number(n));
+}
+LUA_INLINE void lua_len(lua_State* L, int i)
+{
+    switch (lua_type(L, i)) {
+    case LUA_TSTRING:
+    case LUA_TTABLE:
+        lua_pushnumber(L, (int)lua_objlen(L, i));
+        break;
+    case LUA_TUSERDATA:
+        if (luaL_callmeta(L, i, "__len")) {
+            break;
+        }
+        // maybe fall through
+    default:
+        luaL_error(L, "attempt to get length of a %s value", lua_typename(L, lua_type(L, i)));
+        break;
+    }
+}
 #endif
