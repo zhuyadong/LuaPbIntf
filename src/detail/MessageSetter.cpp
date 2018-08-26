@@ -62,7 +62,8 @@ void MessageSetter::SetField(const string& sField, const LuaRef& luaValue)
 #if LUA_HAS_64BIT_INTEGER
         m_pRefl->SetUInt64(&m_rMsg, pField, luaValue.toValue<uint64>());
 #else  // To support Lua5.1/5.2.
-        m_pRefl->SetUInt64(&m_rMsg, pField, luaValue.toValue<double>());
+        //YOOZOO m_pRefl->SetUInt64(&m_rMsg, pField, luaValue.toValue<double>());
+        m_pRefl->SetUInt64(&m_rMsg, pField, luaValue.toValue<uint64>());
 #endif
         return;
     case Fd::CPPTYPE_DOUBLE:
