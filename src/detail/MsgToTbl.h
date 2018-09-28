@@ -7,7 +7,7 @@ namespace LuaIntf {
 class LuaRef;
 }  // namespace LuaIntf
 
-namespace google {
+namespace googlex {
 namespace protobuf {
 class Message;
 class Reflection;
@@ -20,7 +20,7 @@ class MsgToTbl final
 {
 public:
     explicit MsgToTbl(lua_State& rLuaState,
-        const google::protobuf::Message& msg);
+        const googlex::protobuf::Message& msg);
 
 public:
     using LuaRef = LuaIntf::LuaRef;
@@ -28,7 +28,7 @@ public:
     LuaRef ToTbl() const;
 
 private:
-    using FieldDescriptor = google::protobuf::FieldDescriptor;
+    using FieldDescriptor = googlex::protobuf::FieldDescriptor;
 
     LuaRef GetField(const FieldDescriptor& field) const;
     LuaRef GetRepeatedField(const FieldDescriptor& field) const;
@@ -37,8 +37,8 @@ private:
 
 private:
     lua_State& m_rLuaState;
-    const google::protobuf::Message& m_msg;
-    const google::protobuf::Reflection* m_pRefl;  // = msg.GetReflection();
+    const googlex::protobuf::Message& m_msg;
+    const googlex::protobuf::Reflection* m_pRefl;  // = msg.GetReflection();
 };
 
 #endif  // DETAIL_MSGTOTBL_H

@@ -3,13 +3,13 @@
 
 #include <memory>  // for shared_ptr<>
 
-namespace google {
+namespace googlex {
 namespace protobuf {
 class Message;
 }  // namespace protobuf
 }  // namespace google
 
-using MessageSptr = std::shared_ptr<google::protobuf::Message>;
+using MessageSptr = std::shared_ptr<googlex::protobuf::Message>;
 
 #endif  // DETAIL_MESSAGESPTR_H
 

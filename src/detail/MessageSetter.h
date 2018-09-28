@@ -3,7 +3,7 @@
 
 #include <string>
 
-namespace google {
+namespace googlex {
 namespace protobuf {
 class Descriptor;
 class FieldDescriptor;
@@ -20,7 +20,7 @@ class LuaRef;
 class MessageSetter final
 {
 public:
-    explicit MessageSetter(google::protobuf::Message& rMsg);
+    explicit MessageSetter(googlex::protobuf::Message& rMsg);
 
 public:
     using LuaRef = LuaIntf::LuaRef;
@@ -30,7 +30,7 @@ public:
     void SetMsg(const LuaRef& luaTable);
 
 private:
-    using FieldDescriptor = google::protobuf::FieldDescriptor;
+    using FieldDescriptor = googlex::protobuf::FieldDescriptor;
     void SetRepeatedField(const FieldDescriptor& field,
         const LuaRef& luaTable);
     void SetRepeatedMapField(const FieldDescriptor& field,
@@ -43,9 +43,9 @@ private:
         const FieldDescriptor& field) const;
 
 private:
-    google::protobuf::Message& m_rMsg;
-    const google::protobuf::Descriptor* m_pDesc;  // = m_rMsg.GetDescriptor();
-    const google::protobuf::Reflection* m_pRefl;  // = m_rMsg.GetReflection();
+    googlex::protobuf::Message& m_rMsg;
+    const googlex::protobuf::Descriptor* m_pDesc;  // = m_rMsg.GetDescriptor();
+    const googlex::protobuf::Reflection* m_pRefl;  // = m_rMsg.GetReflection();
 };  // class MessageSetter
 
 #endif  // DETAIL_MESSAGESETTER_H

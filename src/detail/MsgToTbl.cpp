@@ -9,7 +9,7 @@
 #include <unordered_set>
 
 using namespace LuaIntf;
-using namespace google::protobuf;
+using namespace googlex::protobuf;
 
 MsgToTbl::MsgToTbl(lua_State& rLuaState, const Message& msg)
     : m_rLuaState(rLuaState),

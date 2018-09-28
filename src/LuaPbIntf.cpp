@@ -22,7 +22,7 @@ __declspec(dllexport)
 int luaopen_luapbintf(lua_State* L)
 {
     using std::string;
-    using google::protobuf::Message;
+    using googlex::protobuf::Message;
     using LuaIntf::LuaRef;
 
     auto pImpl = std::make_shared<LuaPbIntfImpl>();

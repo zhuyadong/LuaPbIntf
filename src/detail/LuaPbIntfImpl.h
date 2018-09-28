@@ -13,7 +13,7 @@ namespace LuaIntf {
 class LuaRef;
 }  // namespace LuaIntf
 
-namespace google {
+namespace googlex {
 namespace protobuf {
 class DynamicMessageFactory;
 class Message;
@@ -70,15 +70,15 @@ public:
         const string& sMethodName) const;
 
 private:
-    const google::protobuf::ServiceDescriptor*
+    const googlex::protobuf::ServiceDescriptor*
         GetServiceDescriptor(const string& sServiceName) const;
-    const google::protobuf::MethodDescriptor& FindRpcMethod(
+    const googlex::protobuf::MethodDescriptor& FindRpcMethod(
         const string& sServiceName, const string& sMethodName) const;
 
 private:
-    using DiskSourceTree = google::protobuf::compiler::DiskSourceTree;
-    using Importer = google::protobuf::compiler::Importer;
-    using MsgFactory = google::protobuf::DynamicMessageFactory;
+    using DiskSourceTree = googlex::protobuf::compiler::DiskSourceTree;
+    using Importer = googlex::protobuf::compiler::Importer;
+    using MsgFactory = googlex::protobuf::DynamicMessageFactory;
 
     std::unique_ptr<DiskSourceTree> m_pDiskSourceTree;
     std::unique_ptr<ErrorCollector> m_pErrorCollector;

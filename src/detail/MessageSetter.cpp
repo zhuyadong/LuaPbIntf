@@ -9,7 +9,7 @@
 
 #include <iostream>  // for cout
 
-using namespace google::protobuf;
+using namespace googlex::protobuf;
 using LuaIntf::LuaException;
 
 MessageSetter::MessageSetter(Message& rMsg)

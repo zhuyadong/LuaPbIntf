@@ -15,7 +15,7 @@
 #include <sstream>  // for ostringstream
 
 using namespace LuaIntf;
-using namespace google::protobuf;
+using namespace googlex::protobuf;
 
 // See protobuf CommandLineInterface::Run().
 
@@ -110,11 +110,11 @@ LuaRef LuaPbIntfImpl::GetServiceDescriptorTbl(lua_State* L,
     const string& sServiceName) const
 {
     assert(L);
-    const google::protobuf::ServiceDescriptor* pDesc
+    const googlex::protobuf::ServiceDescriptor* pDesc
         = GetServiceDescriptor(sServiceName);
     if (!pDesc)
         throw LuaIntf::LuaException("No such service: " + sServiceName);
-    google::protobuf::ServiceDescriptorProto msg;
+    googlex::protobuf::ServiceDescriptorProto msg;
     pDesc->CopyTo(&msg);
     return MsgToTbl(*L, msg).ToTbl();
 }
@@ -143,7 +143,7 @@ bool LuaPbIntfImpl::IsRpcServerStreaming(const string& sServiceName,
     return FindRpcMethod(sServiceName, sMethodName).server_streaming();
 }
 
-const google::protobuf::ServiceDescriptor*
+const googlex::protobuf::ServiceDescriptor*
 LuaPbIntfImpl::GetServiceDescriptor(const string& sServiceName) const
 {
     return m_pImporter->pool()->FindServiceByName(sServiceName);
